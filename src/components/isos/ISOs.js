@@ -147,7 +147,7 @@ const ISOs = () => {
                 </Typography>
             ) : (
                 <Typography variant="h6" component="div" style={{ marginBottom: '20px' }}>
-                    listando por ordem alfabética
+                    Listando por ordem alfabética
                 </Typography>
             )}
             {hovered !== null && <div className={classes.overlay} />}
