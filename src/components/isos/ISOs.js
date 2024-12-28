@@ -7,7 +7,7 @@ import needForSpeed from '../../assets/need-under-2.jpeg';
 import shadowOfTheColossus from '../../assets/shadow-of-the-colossus.jpeg';
 import redDeadRevolver from '../../assets/red-dead-revolver.jpg';
 import spiderMen2 from '../../assets/spider-man-2.jpg';
-import sniperElite from '../../assets/sniper-elite.jpg';
+import sniperElite from '../../assets/sniper-elite.webp';
 
 const useStyles = makeStyles((theme) => ({
     card: {
@@ -27,6 +27,9 @@ const useStyles = makeStyles((theme) => ({
     },
     cardContent: {
         flexGrow: 1,
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
     },
     overlay: {
         position: 'fixed',
@@ -36,6 +39,10 @@ const useStyles = makeStyles((theme) => ({
         height: '100%',
         backgroundColor: 'rgba(0, 0, 0, 0.2)',
         zIndex: 0,
+    },
+    button: {
+        alignSelf: 'center',
+        marginTop: 'auto',
     },
 }));
 
@@ -73,16 +80,18 @@ const ISOs = () => {
                                 title={game.title}
                             />
                             <CardContent className={classes.cardContent}>
-                                <Typography variant="h5" component="h2">
-                                    {game.title}
-                                </Typography>
-                                <Typography color="textSecondary">
-                                    {game.description}
-                                </Typography>
+                                <div>
+                                    <Typography variant="h5" component="h2">
+                                        {game.title}
+                                    </Typography>
+                                    <Typography color="textSecondary">
+                                        {game.description}
+                                    </Typography>
+                                </div>
                                 <Button
                                     variant="contained"
                                     color="primary"
-                                    style={{ marginTop: 10 }}
+                                    className={classes.button}
                                     href={game.link}
                                     target="_blank"
                                     rel="noopener noreferrer"
