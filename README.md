@@ -12,8 +12,8 @@ To get a local copy up and running, follow these simple steps.
 
 ### Prerequisites
 
-- Node.js (version 14 or later)
-- npm (Node package manager)
+- Node.js (version 20 or later)
+- npm (Node package manager) or Yarn
 
 ### Installation
 
