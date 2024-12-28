@@ -5,25 +5,56 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
 import { database } from '../../firebase';
-import { ref, get, increment, update } from 'firebase/database';
+import { ref, get, update, increment } from 'firebase/database';
+import axios from 'axios';
 
 const Header = () => {
     const [visitors, setVisitors] = useState(0);
 
     useEffect(() => {
-        const visitorsRef = ref(database, 'visitors/count');
-        get(visitorsRef).then((snapshot) => {
-            if (snapshot.exists()) {
-                const currentVisitors = snapshot.val().count;
-                setVisitors(currentVisitors);
-                update(visitorsRef, { count: increment(1) });
-            } else {
-                setVisitors(1);
-                update(visitorsRef, { count: 1 });
+        const fetchVisitorData = async () => {
+            try {
+                // Obter o endereço IP do usuário
+                const ipResponse = await axios.get('https://api.ipify.org?format=json');
+                const userIp = ipResponse.data.ip;
+
+                // Obter informações do dispositivo
+                const userAgent = navigator.userAgent;
+
+                // Referência ao banco de dados
+                const visitorsRef = ref(database, 'visitors');
+
+                // Verificar se o visitante já existe no banco de dados
+                const snapshot = await get(visitorsRef);
+                if (snapshot.exists()) {
+                    const visitorsData = snapshot.val();
+                    const visitorKey = `${userIp}_${userAgent}`;
+
+                    if (visitorsData[visitorKey]) {
+                        // Visitante já existe, apenas atualizar a contagem de visitantes
+                        setVisitors(visitorsData.count);
+                    } else {
+                        // Novo visitante, incrementar a contagem e adicionar o visitante
+                        setVisitors(visitorsData.count + 1);
+                        update(visitorsRef, {
+                            count: increment(1),
+                            [visitorKey]: true
+                        });
+                    }
+                } else {
+                    // Primeiro visitante
+                    setVisitors(1);
+                    update(visitorsRef, {
+                        count: 1,
+                        [`${userIp}_${userAgent}`]: true
+                    });
+                }
+            } catch (error) {
+                console.error("Error fetching visitor data: ", error);
             }
-        }).catch((error) => {
-            console.error("Error fetching visitors count: ", error);
-        });
+        };
+
+        fetchVisitorData();
     }, []);
 
     return (
