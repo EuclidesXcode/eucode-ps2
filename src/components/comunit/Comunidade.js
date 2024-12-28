@@ -3,6 +3,7 @@ import { TextField, Button, Typography, List, ListItem, ListItemText, ListItemSe
 import { database } from '../../firebase';
 import { ref, push, onValue } from 'firebase/database';
 import ReplyIcon from '@mui/icons-material/Reply';
+import { useMediaQuery } from 'react-responsive';
 
 const Comunidade = () => {
     const [name, setName] = useState('');
@@ -13,7 +14,7 @@ const Comunidade = () => {
     const [open, setOpen] = useState(false);
     const [alertOpen, setAlertOpen] = useState(false);
 
-    const forbiddenWords = ['fpd', 'FDP', 'filho da puta', 'cu', 'porra', 'caralho', 'vagabundo', 'arrombado', 'cuzão', 'cuzao', 'VSF', 'vsf', 'foda', 'foda-se', 'fodase']; // Adicione as palavras proibidas aqui
+    const forbiddenWords = ['palavrão1', 'palavrão2', 'palavrão3']; // Adicione as palavras proibidas aqui
 
     useEffect(() => {
         const commentsRef = ref(database, 'comments');
@@ -100,11 +101,14 @@ const Comunidade = () => {
         );
     };
 
+    // Detectar se está em um dispositivo móvel
+    const isMobile = useMediaQuery({ query: '(max-width: 767px)' });
+
     return (
-        <div style={{ paddingLeft: '200px', paddingRight: '200px' }}>
+        <div style={{ paddingLeft: isMobile ? 20 : 200, paddingRight: isMobile ? 20 : 200 }}>
             <h1>Comunidade</h1>
             <h3>Bem-vindo à comunidade de entusiastas de PS2.</h3>
-            <p>Diga em baixo o que voce acha da comunidade, deixe sua opinião ou critica. Vamos juntos aumentar essa comunidade, de forma a alcançar todos que também amam a nostalgiia do PS2.</p>
+            <p>Diga em baixo o que voce acha da comunidade, deixe sua opinião ou critica. Vamos juntos aumentar essa comunidade, de forma a alcançar todos que também amam a nostalgia do PS2.</p>
             <form onSubmit={handleSubmit} style={{ marginBottom: '20px' }}>
                 <TextField
                     label="Nome"
