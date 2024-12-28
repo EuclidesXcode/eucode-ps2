@@ -13,6 +13,7 @@ const Header = () => {
                     Eucode PS2 ISOs
                 </Typography>
                 <Button color="inherit" component={Link} to="/isos">ISOs</Button>
+                <Button color="inherit" component={Link} to="/emulator">Emulador</Button>
                 <Button color="inherit" component={Link} to="/comunidade">Comunidade</Button>
                 <Button color="inherit" component={Link} to="/sobre">Sobre</Button>
                 <Button color="inherit" component={Link} to="/donate">Donate</Button>
