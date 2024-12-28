@@ -23,12 +23,12 @@ const Header = () => {
 
                 // Referência ao banco de dados
                 const visitorsRef = ref(database, 'visitors');
+                const visitorKey = `${userIp}_${userAgent}`;
 
                 // Verificar se o visitante já existe no banco de dados
                 const snapshot = await get(visitorsRef);
                 if (snapshot.exists()) {
                     const visitorsData = snapshot.val();
-                    const visitorKey = `${userIp}_${userAgent}`;
 
                     if (visitorsData[visitorKey]) {
                         // Visitante já existe, apenas atualizar a contagem de visitantes
@@ -46,7 +46,7 @@ const Header = () => {
                     setVisitors(1);
                     update(visitorsRef, {
                         count: 1,
-                        [`${userIp}_${userAgent}`]: true
+                        [visitorKey]: true
                     });
                 }
             } catch (error) {
