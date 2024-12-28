@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { TextField, Button, Typography, List, ListItem, ListItemText, ListItemSecondaryAction, IconButton, Modal, Box } from '@mui/material';
+import { TextField, Button, Typography, List, ListItem, ListItemText, ListItemSecondaryAction, IconButton, Modal, Box, Snackbar, Alert } from '@mui/material';
 import { database } from '../../firebase';
 import { ref, push, onValue } from 'firebase/database';
 import ReplyIcon from '@mui/icons-material/Reply';
@@ -11,6 +11,9 @@ const Comunidade = () => {
     const [reply, setReply] = useState('');
     const [replyTo, setReplyTo] = useState(null);
     const [open, setOpen] = useState(false);
+    const [alertOpen, setAlertOpen] = useState(false);
+
+    const forbiddenWords = ['fpd', 'FDP', 'filho da puta', 'cu', 'porra', 'caralho', 'vagabundo', 'arrombado', 'cuzão', 'cuzao', 'VSF', 'vsf', 'foda', 'foda-se', 'fodase']; // Adicione as palavras proibidas aqui
 
     useEffect(() => {
         const commentsRef = ref(database, 'comments');
@@ -23,8 +26,16 @@ const Comunidade = () => {
         });
     }, []);
 
+    const containsForbiddenWords = (text) => {
+        return forbiddenWords.some(word => text.toLowerCase().includes(word));
+    };
+
     const handleSubmit = (e) => {
         e.preventDefault();
+        if (containsForbiddenWords(comment)) {
+            setAlertOpen(true);
+            return;
+        }
         if (name && comment) {
             const commentsRef = ref(database, 'comments');
             push(commentsRef, { name, comment, replies: [], timestamp: Date.now() });
@@ -35,6 +46,10 @@ const Comunidade = () => {
 
     const handleReplySubmit = (e) => {
         e.preventDefault();
+        if (containsForbiddenWords(reply)) {
+            setAlertOpen(true);
+            return;
+        }
         if (replyTo && reply) {
             const commentRef = ref(database, `comments/${replyTo}/replies`);
             push(commentRef, { name, comment: reply, timestamp: Date.now() });
@@ -53,6 +68,10 @@ const Comunidade = () => {
         setOpen(false);
         setReply('');
         setReplyTo(null);
+    };
+
+    const handleAlertClose = () => {
+        setAlertOpen(false);
     };
 
     const formatDate = (timestamp) => {
@@ -161,6 +180,11 @@ const Comunidade = () => {
                     </form>
                 </Box>
             </Modal>
+            <Snackbar open={alertOpen} autoHideDuration={6000} onClose={handleAlertClose}>
+                <Alert onClose={handleAlertClose} severity="error" sx={{ width: '100%' }}>
+                    Comentário contém palavras proibidas. Por favor, revise seu comentário.
+                </Alert>
+            </Snackbar>
         </div>
     );
 };
