@@ -63,6 +63,7 @@ const ISOs = () => {
         <div style={{ padding: 20 }}>
             <h1>Baixe gratuitamente todas as ISO`s da nossa comunidade!</h1>
             <h2>E o melhor de tudo, sem anúncios, sem enganação</h2>
+            <p>Todas nossas ISOs estão no Goolge Drive, então voce será redirecionado ao Google Drive quando clicar em download! Não se preocupe, todas nossas ISOs são testadas antes de vir pra cá!</p>
             {hovered && <div className={classes.overlay} />}
             <Grid container spacing={10} style={{ padding: 50 }}>
                 {games.map((game, index) => (
