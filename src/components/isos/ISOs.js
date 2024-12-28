@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Grid, Card, CardMedia, CardContent, Typography, Button, TextField } from '@mui/material';
 import { makeStyles } from '@mui/styles';
+import { useMediaQuery } from 'react-responsive';
 import games from './games';
 
 const useStyles = makeStyles((theme) => ({
@@ -12,6 +13,7 @@ const useStyles = makeStyles((theme) => ({
         width: '100%',
         transition: 'transform 0.3s ease-in-out',
         zIndex: 1,
+        marginTop: 2,
     },
     cardHovered: {
         transform: 'scale(1.05)',
@@ -51,6 +53,9 @@ const ISOs = () => {
     const [hovered, setHovered] = useState(null);
     const [searchTerm, setSearchTerm] = useState('');
 
+    // Detectar se está em um dispositivo móvel
+    const isMobile = useMediaQuery({ query: '(max-width: 767px)' });
+
     // Ordenar jogos em ordem alfabética
     const sortedGames = games.sort((a, b) => a.title.localeCompare(b.title));
 
@@ -60,7 +65,7 @@ const ISOs = () => {
     );
 
     return (
-        <div style={{ paddingTop: 20, paddingLeft: 200, paddingRight: 200 }}>
+        <div style={{ paddingTop: 20, paddingLeft: isMobile ? 20 : 200, paddingRight: isMobile ? 20 : 200 }}>
             <h1>Baixe gratuitamente todas as ISO`s da nossa comunidade!</h1>
             <h2>E o melhor de tudo, sem anúncios, sem enganação</h2>
             <p>Todas nossas ISOs estão no Goolge Drive, então voce será redirecionado ao Google Drive quando clicar em download! Não se preocupe, todas nossas ISOs são testadas antes de vir pra cá!</p>
@@ -73,7 +78,7 @@ const ISOs = () => {
                 onChange={(e) => setSearchTerm(e.target.value)}
             />
             {hovered !== null && <div className={classes.overlay} />}
-            <Grid container spacing={3} style={{ padding: 50 }}>
+            <Grid container spacing={isMobile ? 2 : 10} style={{ padding: isMobile ? 10 : 50 }}>
                 {filteredGames.map((game, index) => (
                     <Grid item key={index} xs={12} sm={6} md={4} lg={3}>
                         <Card
@@ -88,7 +93,6 @@ const ISOs = () => {
                                 alt={game.title}
                                 image={game.image}
                                 title={game.title}
-                                sx={{ marginTop: 2 }}
                             />
                             <CardContent className={classes.cardContent}>
                                 <div>
