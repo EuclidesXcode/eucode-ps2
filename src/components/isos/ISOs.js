@@ -22,7 +22,8 @@ const useStyles = makeStyles((theme) => ({
         height: '100%',
     },
     cardMedia: {
-        height: 450,
+        height: 400,
+        objectFit: 'cover',
     },
     cardContent: {
         flexGrow: 1,
