@@ -126,8 +126,8 @@ const ISOs = () => {
                             />
                             <CardContent className={classes.cardContent}>
                                 <div>
-                                    <Typography variant="h5" component="h2">
-                                        {game.title}
+                                    <Typography variant="h6" component="h6">
+                                        <strong>{game.title}</strong>
                                     </Typography>
                                 </div>
                                 <Button
