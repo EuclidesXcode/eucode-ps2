@@ -14,13 +14,15 @@ const Header = () => {
         const visitorsRef = ref(database, 'visitors/count');
         get(visitorsRef).then((snapshot) => {
             if (snapshot.exists()) {
-                const currentVisitors = snapshot.val();
+                const currentVisitors = snapshot.val().count;
                 setVisitors(currentVisitors);
-                update(visitorsRef, { 'count': increment(1) });
+                update(visitorsRef, { count: increment(1) });
             } else {
                 setVisitors(1);
-                update(visitorsRef, { 'count': 1 });
+                update(visitorsRef, { count: 1 });
             }
+        }).catch((error) => {
+            console.error("Error fetching visitors count: ", error);
         });
     }, []);
 
