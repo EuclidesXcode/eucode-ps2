@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Grid, Card, CardMedia, CardContent, Typography, Button, TextField } from '@mui/material';
+import { Grid, Card, CardMedia, CardContent, Typography, Button, TextField, IconButton } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import { useMediaQuery } from 'react-responsive';
 import { database } from '../../firebase';
 import { ref, get, update, increment } from 'firebase/database';
-import games from './games';
+import SortIcon from '@mui/icons-material/Sort';
 
 const useStyles = makeStyles((theme) => ({
     card: {
@@ -48,6 +48,13 @@ const useStyles = makeStyles((theme) => ({
     searchField: {
         marginBottom: '20px',
     },
+    searchContainer: {
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginBottom: '20px',
+        justifyContent: 'center'
+    },
 }));
 
 const ISOs = () => {
@@ -56,6 +63,7 @@ const ISOs = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [downloads, setDownloads] = useState({});
     const [games, setGames] = useState([]);
+    const [sortByDownloads, setSortByDownloads] = useState(false);
 
     useEffect(() => {
         const fetchGames = async () => {
@@ -95,8 +103,13 @@ const ISOs = () => {
     // Detectar se está em um dispositivo móvel
     const isMobile = useMediaQuery({ query: '(max-width: 767px)' });
 
-    // Ordenar jogos em ordem alfabética
-    const sortedGames = games.sort((a, b) => a.title.localeCompare(b.title));
+    // Ordenar jogos
+    const sortedGames = Object.values(games).sort((a, b) => {
+        if (sortByDownloads) {
+            return (downloads[b.title] || 0) - (downloads[a.title] || 0);
+        }
+        return a.title.localeCompare(b.title);
+    });
 
     // Filtrar jogos com base no termo de pesquisa
     const filteredGames = sortedGames.filter(game =>
@@ -105,17 +118,38 @@ const ISOs = () => {
 
     return (
         <div style={{ paddingTop: 20, paddingLeft: isMobile ? 20 : 200, paddingRight: isMobile ? 20 : 200 }}>
-            <h1>Baixe gratuitamente todas as {games.length} ISO`s da nossa comunidade!</h1>
+            <h1>Baixe gratuitamente todas as ISO`s da nossa comunidade!</h1>
             <h2>E o melhor de tudo, sem anúncios, sem enganação</h2>
-            <p>Todas nossas ISOs estão no Goolge Drive, então voce será redirecionado ao Google Drive quando clicar em download! Não se preocupe, todas nossas ISOs são testadas antes de vir pra cá!</p>
-            <TextField
-                label="Pesquisar ISOs"
-                variant="outlined"
-                fullWidth
-                className={classes.searchField}
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-            />
+            <p>Todas nossas ISOs estão no Google Drive, então você será redirecionado ao Google Drive quando clicar em download! Não se preocupe, todas nossas ISOs são testadas antes de vir pra cá!</p>
+            <div className={classes.searchContainer}>
+                <TextField
+                    label="Pesquisar ISOs"
+                    variant="outlined"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                />
+                <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={() => setSortByDownloads(!sortByDownloads)}
+                    style={{ marginLeft: '10px' }}
+                >
+                    Mais Baixados
+                </Button>
+            </div>
+            {sortByDownloads ? (
+                <Typography variant="h6" component="div" style={{ marginBottom: '20px' }}>
+                    Listando pelos mais Baixados
+                </Typography>
+            ): searchTerm ? (
+                <Typography variant="h6" component="div" style={{ marginBottom: '20px' }}>
+                    Buscando...
+                </Typography>
+            ) : (
+                <Typography variant="h6" component="div" style={{ marginBottom: '20px' }}>
+                    listando por ordem alfabética
+                </Typography>
+            )}
             {hovered !== null && <div className={classes.overlay} />}
             <Grid container spacing={isMobile ? 2 : 10} style={{ padding: isMobile ? 10 : 50 }}>
                 {filteredGames.map((game, index) => (
