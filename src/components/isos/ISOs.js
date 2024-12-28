@@ -93,6 +93,7 @@ const ISOs = () => {
                                 alt={game.title}
                                 image={game.image}
                                 title={game.title}
+                                sx={{marginTop: 4}}
                             />
                             <CardContent className={classes.cardContent}>
                                 <div>
