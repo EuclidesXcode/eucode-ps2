@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
-        height: 380,
+        height: 350,
         width: '100%',
         transition: 'transform 0.3s ease-in-out',
         zIndex: 1,
