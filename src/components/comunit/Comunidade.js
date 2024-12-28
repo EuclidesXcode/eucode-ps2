@@ -60,13 +60,12 @@ const Comunidade = () => {
         return `${date.toLocaleDateString()} ${date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
     };
 
-    const renderReplies = (replies, level = 1) => {
-        const backgroundColors = ['#ECF7E3', '#E3F2FD', '#F3E5F5']; // Add more colors if needed
+    const renderReplies = (replies) => {
         return (
             <List component="div" disablePadding style={{ paddingLeft: '20px' }}>
                 {Object.entries(replies).map(([id, reply]) => (
                     <div key={id}>
-                        <ListItem alignItems="flex-start" style={{ backgroundColor: backgroundColors[level % backgroundColors.length], marginBottom: '10px' }}>
+                        <ListItem alignItems="flex-start" style={{ backgroundColor: '#ECF7E3', marginBottom: '10px' }}>
                             <ListItemText
                                 primary={`${reply.name} - ${formatDate(reply.timestamp)}`}
                                 secondary={
@@ -75,13 +74,7 @@ const Comunidade = () => {
                                     </Typography>
                                 }
                             />
-                            <ListItemSecondaryAction>
-                                <IconButton edge="end" aria-label="reply" onClick={() => handleReplyClick(id)}>
-                                    <ReplyIcon />
-                                </IconButton>
-                            </ListItemSecondaryAction>
                         </ListItem>
-                        {reply.replies && renderReplies(reply.replies, level + 1)}
                     </div>
                 ))}
             </List>
@@ -159,8 +152,11 @@ const Comunidade = () => {
                             rows={2}
                             style={{ marginBottom: '10px' }}
                         />
-                        <Button variant="contained" color="primary" type="submit">
+                        <Button variant="contained" color="primary" type="submit" style={{ marginRight: '10px' }}>
                             Responder
+                        </Button>
+                        <Button variant="contained" color="secondary" onClick={handleClose}>
+                            Cancelar
                         </Button>
                     </form>
                 </Box>
