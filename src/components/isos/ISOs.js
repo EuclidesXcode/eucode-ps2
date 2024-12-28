@@ -55,8 +55,17 @@ const ISOs = () => {
     const [hovered, setHovered] = useState(null);
     const [searchTerm, setSearchTerm] = useState('');
     const [downloads, setDownloads] = useState({});
+    const [games, setGames] = useState([]);
 
     useEffect(() => {
+        const fetchGames = async () => {
+            const gamesRef = ref(database, 'games');
+            const snapshot = await get(gamesRef);
+            if (snapshot.exists()) {
+                setGames(snapshot.val());
+            }
+        };
+
         const fetchDownloads = async () => {
             const downloadsRef = ref(database, 'downloads');
             const snapshot = await get(downloadsRef);
@@ -70,6 +79,7 @@ const ISOs = () => {
             }
         };
 
+        fetchGames();
         fetchDownloads();
     }, []);
 
@@ -95,7 +105,7 @@ const ISOs = () => {
 
     return (
         <div style={{ paddingTop: 20, paddingLeft: isMobile ? 20 : 200, paddingRight: isMobile ? 20 : 200 }}>
-            <h1>Baixe gratuitamente todas as ISO`s da nossa comunidade!</h1>
+            <h1>Baixe gratuitamente todas as {games.length} ISO`s da nossa comunidade!</h1>
             <h2>E o melhor de tudo, sem anúncios, sem enganação</h2>
             <p>Todas nossas ISOs estão no Goolge Drive, então voce será redirecionado ao Google Drive quando clicar em download! Não se preocupe, todas nossas ISOs são testadas antes de vir pra cá!</p>
             <TextField
