@@ -5,8 +5,9 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
 import { database } from '../../firebase';
-import { ref, get, update, increment } from 'firebase/database';
+import { ref, get, update, increment, set } from 'firebase/database';
 import axios from 'axios';
+import games from '../isos/games';
 
 const Header = () => {
     const [visitors, setVisitors] = useState(0);
@@ -58,16 +59,26 @@ const Header = () => {
             }
         };
 
+        const updateGamesList = async () => {
+            try {
+                const gamesRef = ref(database, 'games');
+                await set(gamesRef, games);
+            } catch (error) {
+                console.error("Error updating games list: ", error);
+            }
+        };
+
         fetchVisitorData();
+        updateGamesList();
     }, []);
 
     return (
         <AppBar position="static">
             <Toolbar>
                 <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                    Eucode Play 2
+                    Eucode PS2 ISOs
                 </Typography>
-                <Button color="inherit" component={Link} to="/isos">ISO`s</Button>
+                <Button color="inherit" component={Link} to="/isos">ISOs</Button>
                 <Button color="inherit" component={Link} to="/emulator">Emulador</Button>
                 <Button color="inherit" component={Link} to="/comunidade">Comunidade</Button>
                 <Button color="inherit" component={Link} to="/sobre">Sobre</Button>
