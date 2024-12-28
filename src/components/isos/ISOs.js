@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Grid, Card, CardMedia, CardContent, Typography, Button, TextField } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import { useMediaQuery } from 'react-responsive';
+import { database } from '../../firebase';
+import { ref, get, update, increment } from 'firebase/database';
 import games from './games';
 
 const useStyles = makeStyles((theme) => ({
@@ -9,7 +11,7 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
-        height: 420,
+        height: 380,
         width: '100%',
         transition: 'transform 0.3s ease-in-out',
         zIndex: 1,
@@ -52,6 +54,28 @@ const ISOs = () => {
     const classes = useStyles();
     const [hovered, setHovered] = useState(null);
     const [searchTerm, setSearchTerm] = useState('');
+    const [downloads, setDownloads] = useState({});
+
+    useEffect(() => {
+        const fetchDownloads = async () => {
+            const downloadsRef = ref(database, 'downloads');
+            const snapshot = await get(downloadsRef);
+            if (snapshot.exists()) {
+                setDownloads(snapshot.val());
+            }
+        };
+
+        fetchDownloads();
+    }, []);
+
+    const handleDownload = async (gameTitle) => {
+        const downloadsRef = ref(database, `downloads/${gameTitle}`);
+        await update(downloadsRef, { count: increment(1) });
+        setDownloads((prevDownloads) => ({
+            ...prevDownloads,
+            [gameTitle]: (prevDownloads[gameTitle] || 0) + 1,
+        }));
+    };
 
     // Detectar se está em um dispositivo móvel
     const isMobile = useMediaQuery({ query: '(max-width: 767px)' });
@@ -93,15 +117,12 @@ const ISOs = () => {
                                 alt={game.title}
                                 image={game.image}
                                 title={game.title}
-                                sx={{marginTop: 4}}
+                                sx={{ marginTop: 3 }}
                             />
                             <CardContent className={classes.cardContent}>
                                 <div>
                                     <Typography variant="h5" component="h2">
                                         {game.title}
-                                    </Typography>
-                                    <Typography color="textSecondary">
-                                        {game.description}
                                     </Typography>
                                 </div>
                                 <Button
@@ -111,9 +132,13 @@ const ISOs = () => {
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className={classes.button}
+                                    onClick={() => handleDownload(game.title)}
                                 >
-                                    Download
+                                    Download grátis
                                 </Button>
+                                <Typography variant="body2" color="textSecondary" sx={{ marginTop: 1 }}>
+                                    Downloads: {downloads[game.title] || 0}
+                                </Typography>
                             </CardContent>
                         </Card>
                     </Grid>
