@@ -21,9 +21,13 @@ const Header = () => {
                 // Obter informações do dispositivo
                 const userAgent = navigator.userAgent;
 
+                // Substituir caracteres inválidos
+                const sanitizedUserIp = userIp.replace(/[.#$/[\]]/g, '_');
+                const sanitizedUserAgent = userAgent.replace(/[.#$/[\]]/g, '_');
+
                 // Referência ao banco de dados
                 const visitorsRef = ref(database, 'visitors');
-                const visitorKey = `${userIp}_${userAgent}`;
+                const visitorKey = `${sanitizedUserIp}_${sanitizedUserAgent}`;
 
                 // Verificar se o visitante já existe no banco de dados
                 const snapshot = await get(visitorsRef);
