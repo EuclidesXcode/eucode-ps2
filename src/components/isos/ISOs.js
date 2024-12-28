@@ -61,7 +61,12 @@ const ISOs = () => {
             const downloadsRef = ref(database, 'downloads');
             const snapshot = await get(downloadsRef);
             if (snapshot.exists()) {
-                setDownloads(snapshot.val());
+                const data = snapshot.val();
+                const formattedDownloads = Object.keys(data).reduce((acc, key) => {
+                    acc[key] = data[key].count;
+                    return acc;
+                }, {});
+                setDownloads(formattedDownloads);
             }
         };
 
@@ -117,7 +122,7 @@ const ISOs = () => {
                                 alt={game.title}
                                 image={game.image}
                                 title={game.title}
-                                sx={{ marginTop: 3 }}
+                                sx={{ marginTop: 4 }}
                             />
                             <CardContent className={classes.cardContent}>
                                 <div>
@@ -134,7 +139,7 @@ const ISOs = () => {
                                     className={classes.button}
                                     onClick={() => handleDownload(game.title)}
                                 >
-                                    Download grátis
+                                    Download
                                 </Button>
                                 <Typography variant="body2" color="textSecondary" sx={{ marginTop: 1 }}>
                                     Downloads: {downloads[game.title] || 0}
