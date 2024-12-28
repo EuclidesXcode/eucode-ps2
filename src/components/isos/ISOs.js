@@ -118,7 +118,7 @@ const ISOs = () => {
 
     return (
         <div style={{ paddingTop: 20, paddingLeft: isMobile ? 20 : 200, paddingRight: isMobile ? 20 : 200 }}>
-            <h1>Baixe gratuitamente todas as ISO`s da nossa comunidade!</h1>
+            <h1>Baixe gratuitamente todas as {games.length} ISO`s da nossa comunidade!</h1>
             <h2>E o melhor de tudo, sem anúncios, sem enganação</h2>
             <p>Todas nossas ISOs estão no Google Drive, então você será redirecionado ao Google Drive quando clicar em download! Não se preocupe, todas nossas ISOs são testadas antes de vir pra cá!</p>
             <div className={classes.searchContainer}>
