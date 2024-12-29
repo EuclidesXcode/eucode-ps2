@@ -49,7 +49,6 @@ const useStyles = makeStyles((theme) => ({
         marginTop: 'auto',
     },
     searchField: {
-        marginBottom: '20px',
     },
     searchContainer: {
         display: 'flex',
