@@ -12,7 +12,7 @@ import callOfDuty3 from '../../assets/call-of-duty-3.jpeg';
 import godOfWar from '../../assets/god-of-war.jpeg';
 
 const games = [
-    { title: 'God of War', image: godOfWar, link: 'https://drive.google.com/file/d/1LeRbnry6tN-kRqdeOMCl6QYOFEKwzjdU/view' },
+    { title: 'God of War', image: godOfWar, link: 'https://drive.google.com/file/d/1LeRbnry6tN-kRqdeOMCl6QYOFEKwzjdU/view?usp=sharing' },
     { title: 'Need for Speed Underground 2', image: needForSpeed, link: 'https://drive.google.com/file/d/11mW64yMp8M8CjvXu6QMo1FLh6V4aL5P9/view?usp=share_link' },
     { title: 'Shadow Of The Colossus', image: shadowOfTheColossus, link: 'https://drive.google.com/file/d/1xs2QiA8nEf4rHxK71-sWuxhu7fOZAJAv/view?usp=share_link' },
     { title: 'Red Dead Revolver', image: redDeadRevolver, link: 'https://drive.google.com/file/d/1dNw2aaGVHqPMp-tgm2Tr0UOI_M8eJGEW/view?usp=share_link' },
