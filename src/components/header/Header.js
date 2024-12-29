@@ -5,6 +5,7 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
+import PersonIcon from '@mui/icons-material/Person';
 import Drawer from '@mui/material/Drawer';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
@@ -12,13 +13,15 @@ import ListItemText from '@mui/material/ListItemText';
 import { Link } from 'react-router-dom';
 import { useMediaQuery } from 'react-responsive';
 import { database } from '../../firebase';
-import { ref, get, update, increment, set } from 'firebase/database';
+import { ref, get, update, increment } from 'firebase/database';
 import axios from 'axios';
+import Cookies from 'js-cookie';
 import games from '../isos/games';
 
 const Header = () => {
     const [visitors, setVisitors] = useState(0);
     const [drawerOpen, setDrawerOpen] = useState(false);
+    const [loggedInUser, setLoggedInUser] = useState(null);
 
     useEffect(() => {
         const fetchVisitorData = async () => {
@@ -67,17 +70,14 @@ const Header = () => {
             }
         };
 
-        const updateGamesList = async () => {
-            try {
-                const gamesRef = ref(database, 'games');
-                await set(gamesRef, games);
-            } catch (error) {
-                console.error("Error updating games list: ", error);
-            }
-        };
-
         fetchVisitorData();
-        updateGamesList();
+
+        // Verificar se o usuário está logado
+        const loggedInUser = Cookies.get('loggedInUser');
+        if (loggedInUser) {
+            const userData = JSON.parse(loggedInUser);
+            setLoggedInUser(userData.name);
+        }
     }, []);
 
     // Detectar se está em um dispositivo móvel
@@ -98,7 +98,7 @@ const Header = () => {
             <ListItem button component={Link} to="/emulator">
                 <ListItemText primary="Emulador" />
             </ListItem>
-            <ListItem button component={Link} to="/comunidade">
+            <ListItem button component={Link} to="/community">
                 <ListItemText primary="Comunidade" />
             </ListItem>
             <ListItem button component={Link} to="/sobre">
@@ -111,10 +111,10 @@ const Header = () => {
     );
 
     return (
-        <AppBar position="static">
+        <AppBar position="fixed">
             <Toolbar>
                 <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                    Eucode PS2 ISOs
+                    Eucode | Play 2
                 </Typography>
                 {isMobile ? (
                     <>
@@ -146,6 +146,14 @@ const Header = () => {
                 <Typography variant="body1" component="div" sx={{ flexGrow: 1 }}>
                     Visitantes: {visitors}
                 </Typography>
+                {loggedInUser && (
+                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                        <PersonIcon />
+                        <Typography variant="body1" component="div" sx={{ marginLeft: 1 }}>
+                            {loggedInUser}
+                        </Typography>
+                    </div>
+                )}
             </Toolbar>
         </AppBar>
     );
