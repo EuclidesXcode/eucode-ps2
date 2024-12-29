@@ -51,7 +51,6 @@ const useStyles = makeStyles((theme) => ({
         marginTop: 'auto',
     },
     searchField: {
-        marginBottom: '20px',
     },
     searchContainer: {
         display: 'flex',
@@ -76,7 +75,7 @@ const ISOs = () => {
     const [games, setGames] = useState([]);
     const [sortByDownloads, setSortByDownloads] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 8; // Número de itens por página
+    const itemsPerPage = 12; // Número de itens por página
 
     useEffect(() => {
         const fetchGames = async () => {
@@ -184,7 +183,7 @@ const ISOs = () => {
                 </Typography>
             )}
             <Grid container spacing={isMobile ? 2 : 10} style={{ padding: isMobile ? 10 : 50 }}>
-                {filteredGames.map((game, index) => (
+                {currentGames.map((game, index) => (
                     <Grid item key={index} xs={12} sm={6} md={4} lg={3}>
                         <Card
                             className={`${classes.card} ${hovered === index ? classes.cardHovered : ''}`}
