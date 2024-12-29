@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { Grid, Card, CardMedia, CardContent, Typography, Button, TextField } from '@mui/material';
+import { Grid, Card, CardMedia, CardContent, Typography, Button, TextField, IconButton } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import { useMediaQuery } from 'react-responsive';
 import { database } from '../../firebase';
 import { ref, get, update, increment } from 'firebase/database';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
 const useStyles = makeStyles((theme) => ({
     card: {
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
-        height: 420,
+        height: 350,
         width: '100%',
         transition: 'transform 0.3s ease-in-out',
         zIndex: 1,
@@ -41,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
         left: 0,
         width: '100%',
         height: '100%',
-        backgroundColor: 'rgba(177, 177, 243, 0.25)', // Azul marinho com 25% de opacidade
+        backgroundColor: 'rgba(0, 0, 139, 0.25)', // Azul marinho com 25% de opacidade
         zIndex: 2,
     },
     button: {
@@ -49,6 +51,7 @@ const useStyles = makeStyles((theme) => ({
         marginTop: 'auto',
     },
     searchField: {
+        marginBottom: '20px',
     },
     searchContainer: {
         display: 'flex',
@@ -56,6 +59,12 @@ const useStyles = makeStyles((theme) => ({
         alignItems: 'center',
         marginBottom: '20px',
         justifyContent: 'center'
+    },
+    paginationContainer: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: '20px',
     },
 }));
 
@@ -66,6 +75,8 @@ const ISOs = () => {
     const [downloads, setDownloads] = useState({});
     const [games, setGames] = useState([]);
     const [sortByDownloads, setSortByDownloads] = useState(false);
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 8; // Número de itens por página
 
     useEffect(() => {
         const fetchGames = async () => {
@@ -117,6 +128,23 @@ const ISOs = () => {
     const filteredGames = sortedGames.filter(game =>
         game.title.toLowerCase().includes(searchTerm.toLowerCase())
     );
+
+    // Paginar jogos
+    const indexOfLastGame = currentPage * itemsPerPage;
+    const indexOfFirstGame = indexOfLastGame - itemsPerPage;
+    const currentGames = filteredGames.slice(indexOfFirstGame, indexOfLastGame);
+
+    const handleNextPage = () => {
+        if (currentPage < Math.ceil(filteredGames.length / itemsPerPage)) {
+            setCurrentPage(currentPage + 1);
+        }
+    };
+
+    const handlePreviousPage = () => {
+        if (currentPage > 1) {
+            setCurrentPage(currentPage - 1);
+        }
+    };
 
     return (
         <div style={{ paddingTop: 20, paddingLeft: isMobile ? 20 : 200, paddingRight: isMobile ? 20 : 200 }}>
@@ -197,6 +225,17 @@ const ISOs = () => {
                     </Grid>
                 ))}
             </Grid>
+            <div className={classes.paginationContainer}>
+                <IconButton onClick={handlePreviousPage} disabled={currentPage === 1}>
+                    <ArrowBackIcon />
+                </IconButton>
+                <Typography variant="body1" component="div">
+                    Página {currentPage} de {Math.ceil(filteredGames.length / itemsPerPage)}
+                </Typography>
+                <IconButton onClick={handleNextPage} disabled={currentPage === Math.ceil(filteredGames.length / itemsPerPage)}>
+                    <ArrowForwardIcon />
+                </IconButton>
+            </div>
         </div>
     );
 };
