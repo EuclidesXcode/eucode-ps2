@@ -125,7 +125,7 @@ const Header = () => {
                         <Button color="inherit" component={Link} to="/emulator">Emulador</Button>
                         <Button color="inherit" component={Link} to="/community">Comunidade</Button>
                         <Button color="inherit" component={Link} to="/sobre">Sobre</Button>
-                        <Button color="inherit" component={Link} to="/donate">Donate</Button>
+                        <Button color="inherit" component={Link} to="/donate">Doação</Button>
                     </>
                 )}
                 <Typography variant="body1" component="div" sx={{ flexGrow: 1 }}>
