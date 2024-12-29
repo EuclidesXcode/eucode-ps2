@@ -1,4 +1,3 @@
-import godOfWar1 from '../../assets/god-of-war-1.jpeg';
 import needForSpeed from '../../assets/need-under-2.jpeg';
 import shadowOfTheColossus from '../../assets/shadow-of-the-colossus.jpeg';
 import redDeadRevolver from '../../assets/red-dead-revolver.jpg';
@@ -10,9 +9,10 @@ import grandTheftAutoIII from '../../assets/gta-3.jpeg';
 import metalSlugAnthology from '../../assets/metal-slug-anthology.jpeg';
 import black from '../../assets/black.jpg';
 import callOfDuty3 from '../../assets/call-of-duty-3.jpeg';
+import godOfWar from '../../assets/god-of-war.jpeg';
 
 const games = [
-    { title: 'God of War', image: godOfWar1, link: 'https://drive.google.com/file/d/1mKWcU-m4CXj37QPlUyDxY4O7vkURNQNN/view?usp=share_link' },
+    { title: 'God of War', image: godOfWar, link: 'https://drive.google.com/file/d/1mKWcU-m4CXj37QPlUyDxY4O7vkURNQNN/view?usp=share_link' },
     { title: 'Need for Speed Underground 2', image: needForSpeed, link: 'https://drive.google.com/file/d/11mW64yMp8M8CjvXu6QMo1FLh6V4aL5P9/view?usp=share_link' },
     { title: 'Shadow Of The Colossus', image: shadowOfTheColossus, link: 'https://drive.google.com/file/d/1xs2QiA8nEf4rHxK71-sWuxhu7fOZAJAv/view?usp=share_link' },
     { title: 'Red Dead Revolver', image: redDeadRevolver, link: 'https://drive.google.com/file/d/1dNw2aaGVHqPMp-tgm2Tr0UOI_M8eJGEW/view?usp=share_link' },
