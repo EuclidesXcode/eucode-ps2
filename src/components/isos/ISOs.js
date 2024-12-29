@@ -22,10 +22,10 @@ const useStyles = makeStyles((theme) => ({
     },
     cardHovered: {
         transform: 'scale(1.05)',
-        zIndex: 3, // Aumentar o zIndex para ficar acima do overlay
+        zIndex: 3,
     },
     cardNotHovered: {
-        zIndex: 0, // Diminuir o zIndex para ficar abaixo do overlay
+        zIndex: 0,
     },
     cardMedia: {
         height: 0,
@@ -44,14 +44,11 @@ const useStyles = makeStyles((theme) => ({
         left: 0,
         width: '100%',
         height: '100%',
-        backgroundColor: 'rgba(0, 0, 139, 0.25)', // Azul marinho com 25% de opacidade
-        zIndex: 2,
+        backgroundColor: 'rgba(0, 0, 139, 0.25)',
     },
     button: {
         alignSelf: 'center',
         marginTop: 'auto',
-    },
-    searchField: {
     },
     searchContainer: {
         display: 'flex',
@@ -77,7 +74,7 @@ const ISOs = () => {
     const [missingGames, setMissingGames] = useState([]);
     const [sortByDownloads, setSortByDownloads] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 12; // Número de itens por página
+    const itemsPerPage = 12;
 
     useEffect(() => {
         const fetchGames = async () => {
@@ -87,18 +84,14 @@ const ISOs = () => {
                 const gamesData = snapshot.val();
                 setGames(Object.values(gamesData));
 
-                // Comparar jogos do arquivo com jogos do banco de dados
                 const gamesFromDatabase = Object.values(gamesData).map(game => game.title);
                 const missingGames = gamesFromFile.filter(game => !gamesFromDatabase.includes(game.title));
-                setMissingGames(missingGames);
 
-                // Adicionar jogos faltantes ao banco de dados
                 missingGames.forEach(async (game) => {
                     const newGameRef = ref(database, `games/${game.title}`);
                     await set(newGameRef, game);
                 });
 
-                // Atualizar a lista de jogos após adicionar os jogos faltantes
                 const updatedSnapshot = await get(gamesRef);
                 if (updatedSnapshot.exists()) {
                     const updatedGamesData = updatedSnapshot.val();
@@ -133,10 +126,8 @@ const ISOs = () => {
         }));
     };
 
-    // Detectar se está em um dispositivo móvel
     const isMobile = useMediaQuery({ query: '(max-width: 767px)' });
 
-    // Ordenar jogos
     const sortedGames = games.sort((a, b) => {
         if (sortByDownloads) {
             return (downloads[b.title] || 0) - (downloads[a.title] || 0);
@@ -144,12 +135,10 @@ const ISOs = () => {
         return a.title.localeCompare(b.title);
     });
 
-    // Filtrar jogos com base no termo de pesquisa
     const filteredGames = sortedGames.filter(game =>
         game.title.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
-    // Paginar jogos
     const indexOfLastGame = currentPage * itemsPerPage;
     const indexOfFirstGame = indexOfLastGame - itemsPerPage;
     const currentGames = filteredGames.slice(indexOfFirstGame, indexOfLastGame);
@@ -177,7 +166,6 @@ const ISOs = () => {
                     label="Pesquisar ISOs"
                     variant="outlined"
                     fullWidth
-                    className={classes.searchField}
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                 />

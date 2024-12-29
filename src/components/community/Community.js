@@ -7,6 +7,7 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 import CryptoJS from 'crypto-js';
 import ReplyIcon from '@mui/icons-material/Reply';
+import forbiddenWords from '../../utils/forbiddenWords';
 
 const Community = () => {
     const [name, setName] = useState('');
@@ -21,20 +22,15 @@ const Community = () => {
     const [isNewUser, setIsNewUser] = useState(false);
     const [forbiddenWordsModalOpen, setForbiddenWordsModalOpen] = useState(false);
 
-    const forbiddenWords = ['puta que pariu', 'porra', 'caralho', 'pqp', 'vtnc', 'cu', 'buceta', 'piru', 'meu pau', 'piroca', 'crl'];
-
-    
     useEffect(() => {
         const commentsRef = ref(database, 'comments');
         onValue(commentsRef, (snapshot) => {
             const data = snapshot.val();
             const commentsList = data ? Object.entries(data).map(([id, value]) => ({ id, ...value })) : [];
-            // Ordenar os comentários mais recentes primeiro
             commentsList.sort((a, b) => b.timestamp - a.timestamp);
             setComments(commentsList);
         });
 
-        // Verificar se o usuário está logado
         const loggedInUser = Cookies.get('loggedInUser');
         if (loggedInUser) {
             const userData = JSON.parse(loggedInUser);
@@ -55,7 +51,6 @@ const Community = () => {
         if (name && comment) {
             const loggedInUser = Cookies.get('loggedInUser');
             if (loggedInUser) {
-                // Usuário já está logado, permitir comentário sem pedir senha
                 const commentsRef = ref(database, 'comments');
                 push(commentsRef, { name, comment, replies: [], timestamp: Date.now() });
                 setComment('');
@@ -82,7 +77,6 @@ const Community = () => {
             push(commentsRef, { name, comment, replies: [], timestamp: Date.now() });
             setName(name);
             setComment('');
-            // Salvar dados do usuário no cookie
             Cookies.set('loggedInUser', JSON.stringify({ name }), { expires: 7 });
         } else {
             const usersRef = ref(database, `users/${name}`);
@@ -92,7 +86,6 @@ const Community = () => {
                 push(commentsRef, { name, comment, replies: [], timestamp: Date.now() });
                 setName('');
                 setComment('');
-                // Salvar dados do usuário no cookie
                 Cookies.set('loggedInUser', JSON.stringify({ name }), { expires: 7 });
             } else {
                 setAlertOpen(true);
