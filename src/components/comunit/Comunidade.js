@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { TextField, Button, Typography, List, ListItem, ListItemText, ListItemSecondaryAction, IconButton, Modal, Box, Snackbar, Alert } from '@mui/material';
+import { TextField, Button, Typography, List, ListItem, ListItemText, Modal, Box, Snackbar, Alert, IconButton, ListItemSecondaryAction } from '@mui/material';
 import { database } from '../../firebase';
-import { ref, push, onValue } from 'firebase/database';
-import ReplyIcon from '@mui/icons-material/Reply';
+import { ref, push, onValue, set, get } from 'firebase/database';
 import { useMediaQuery } from 'react-responsive';
+import axios from 'axios';
+import Cookies from 'js-cookie';
+import ReplyIcon from '@mui/icons-material/Reply';
 
 const Comunidade = () => {
     const [name, setName] = useState('');
@@ -13,9 +15,14 @@ const Comunidade = () => {
     const [replyTo, setReplyTo] = useState(null);
     const [open, setOpen] = useState(false);
     const [alertOpen, setAlertOpen] = useState(false);
+    const [password, setPassword] = useState('');
+    const [passwordModalOpen, setPasswordModalOpen] = useState(false);
+    const [isNewUser, setIsNewUser] = useState(false);
+    const [forbiddenWordsModalOpen, setForbiddenWordsModalOpen] = useState(false);
 
-    const forbiddenWords = ['palavrão1', 'palavrão2', 'palavrão3']; // Adicione as palavras proibidas aqui
+    const forbiddenWords = ['puta que pariu', 'porra', 'caralho', 'pqp', 'vtnc', 'cu', 'buceta', 'piru', 'meu pau', 'piroca', 'crl'];
 
+    
     useEffect(() => {
         const commentsRef = ref(database, 'comments');
         onValue(commentsRef, (snapshot) => {
@@ -25,30 +32,78 @@ const Comunidade = () => {
             commentsList.sort((a, b) => b.timestamp - a.timestamp);
             setComments(commentsList);
         });
+
+        // Verificar se o usuário está logado
+        const loggedInUser = Cookies.get('loggedInUser');
+        if (loggedInUser) {
+            const userData = JSON.parse(loggedInUser);
+            setName(userData.name);
+        }
     }, []);
 
     const containsForbiddenWords = (text) => {
         return forbiddenWords.some(word => text.toLowerCase().includes(word));
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         if (containsForbiddenWords(comment)) {
-            setAlertOpen(true);
+            setForbiddenWordsModalOpen(true);
             return;
         }
         if (name && comment) {
+            const loggedInUser = Cookies.get('loggedInUser');
+            if (loggedInUser) {
+                // Usuário já está logado, permitir comentário sem pedir senha
+                const commentsRef = ref(database, 'comments');
+                push(commentsRef, { name, comment, replies: [], timestamp: Date.now() });
+                setComment('');
+            } else {
+                const usersRef = ref(database, `users/${name}`);
+                const snapshot = await get(usersRef);
+                if (snapshot.exists()) {
+                    setPasswordModalOpen(true);
+                    setIsNewUser(false);
+                } else {
+                    setPasswordModalOpen(true);
+                    setIsNewUser(true);
+                }
+            }
+        }
+    };
+
+    const handlePasswordSubmit = async () => {
+        if (isNewUser) {
+            const usersRef = ref(database, `users/${name}`);
+            await set(usersRef, { password });
             const commentsRef = ref(database, 'comments');
             push(commentsRef, { name, comment, replies: [], timestamp: Date.now() });
             setName('');
             setComment('');
+            // Salvar dados do usuário no cookie
+            Cookies.set('loggedInUser', JSON.stringify({ name }), { expires: 7 });
+        } else {
+            const usersRef = ref(database, `users/${name}`);
+            const snapshot = await get(usersRef);
+            if (snapshot.exists() && snapshot.val().password === password) {
+                const commentsRef = ref(database, 'comments');
+                push(commentsRef, { name, comment, replies: [], timestamp: Date.now() });
+                setName('');
+                setComment('');
+                // Salvar dados do usuário no cookie
+                Cookies.set('loggedInUser', JSON.stringify({ name }), { expires: 7 });
+            } else {
+                setAlertOpen(true);
+            }
         }
+        setPassword('');
+        setPasswordModalOpen(false);
     };
 
     const handleReplySubmit = (e) => {
         e.preventDefault();
         if (containsForbiddenWords(reply)) {
-            setAlertOpen(true);
+            setForbiddenWordsModalOpen(true);
             return;
         }
         if (replyTo && reply) {
@@ -73,6 +128,10 @@ const Comunidade = () => {
 
     const handleAlertClose = () => {
         setAlertOpen(false);
+    };
+
+    const handleForbiddenWordsModalClose = () => {
+        setForbiddenWordsModalOpen(false);
     };
 
     const formatDate = (timestamp) => {
@@ -101,7 +160,6 @@ const Comunidade = () => {
         );
     };
 
-    // Detectar se está em um dispositivo móvel
     const isMobile = useMediaQuery({ query: '(max-width: 767px)' });
 
     return (
@@ -184,9 +242,41 @@ const Comunidade = () => {
                     </form>
                 </Box>
             </Modal>
+            <Modal open={passwordModalOpen} onClose={() => setPasswordModalOpen(false)}>
+                <Box sx={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: 400, bgcolor: 'background.paper', border: '2px solid #000', boxShadow: 24, p: 4 }}>
+                    <Typography variant="h6" component="h2" style={{ marginBottom: '10px' }}>
+                        {isNewUser ? 'Cadastrar Nome' : 'Nome já cadastrado, por favor insira a senha'}
+                    </Typography>
+                    <TextField
+                        label="Senha"
+                        variant="outlined"
+                        type="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        fullWidth
+                        style={{ marginBottom: '10px' }}
+                    />
+                    <Button variant="contained" color="primary" onClick={handlePasswordSubmit} style={{ marginRight: '10px' }}>
+                        {isNewUser ? 'Cadastrar' : 'Enviar'}
+                    </Button>
+                    <Button variant="contained" color="secondary" onClick={() => setPasswordModalOpen(false)}>
+                        Cancelar
+                    </Button>
+                </Box>
+            </Modal>
+            <Modal open={forbiddenWordsModalOpen} onClose={handleForbiddenWordsModalClose}>
+                <Box sx={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: 400, bgcolor: 'background.paper', border: '2px solid #000', boxShadow: 24, p: 4 }}>
+                    <Typography variant="h6" component="h2" style={{ marginBottom: '10px' }}>
+                        Comentário contém palavras proibidas. Por favor, revise seu comentário.
+                    </Typography>
+                    <Button variant="contained" color="primary" onClick={handleForbiddenWordsModalClose} style={{ marginRight: '10px' }}>
+                        Reescrever
+                    </Button>
+                </Box>
+            </Modal>
             <Snackbar open={alertOpen} autoHideDuration={6000} onClose={handleAlertClose}>
                 <Alert onClose={handleAlertClose} severity="error" sx={{ width: '100%' }}>
-                    Comentário contém palavras proibidas. Por favor, revise seu comentário.
+                    Senha incorreta. Por favor, tente novamente.
                 </Alert>
             </Snackbar>
         </div>
