@@ -3,10 +3,10 @@ import { Grid, Card, CardMedia, CardContent, Typography, Button, TextField, Icon
 import { makeStyles } from '@mui/styles';
 import { useMediaQuery } from 'react-responsive';
 import { database } from '../../firebase';
-import { ref, get, update, increment } from 'firebase/database';
+import { ref, get, update, set, increment } from 'firebase/database';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import gamesFromFile from './games';
+import gamesFromFile from './games'; // Importar os jogos do arquivo
 
 const useStyles = makeStyles((theme) => ({
     card: {
@@ -74,6 +74,7 @@ const ISOs = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [downloads, setDownloads] = useState({});
     const [games, setGames] = useState(gamesFromFile);
+    const [missingGames, setMissingGames] = useState([]);
     const [sortByDownloads, setSortByDownloads] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 12; // Número de itens por página
@@ -83,7 +84,26 @@ const ISOs = () => {
             const gamesRef = ref(database, 'games');
             const snapshot = await get(gamesRef);
             if (snapshot.exists()) {
-                setGames(snapshot.val());
+                const gamesData = snapshot.val();
+                setGames(Object.values(gamesData));
+
+                // Comparar jogos do arquivo com jogos do banco de dados
+                const gamesFromDatabase = Object.values(gamesData).map(game => game.title);
+                const missingGames = gamesFromFile.filter(game => !gamesFromDatabase.includes(game.title));
+                setMissingGames(missingGames);
+
+                // Adicionar jogos faltantes ao banco de dados
+                missingGames.forEach(async (game) => {
+                    const newGameRef = ref(database, `games/${game.title}`);
+                    await set(newGameRef, game);
+                });
+
+                // Atualizar a lista de jogos após adicionar os jogos faltantes
+                const updatedSnapshot = await get(gamesRef);
+                if (updatedSnapshot.exists()) {
+                    const updatedGamesData = updatedSnapshot.val();
+                    setGames(Object.values(updatedGamesData));
+                }
             }
         };
 
@@ -117,7 +137,7 @@ const ISOs = () => {
     const isMobile = useMediaQuery({ query: '(max-width: 767px)' });
 
     // Ordenar jogos
-    const sortedGames = Object.values(games).sort((a, b) => {
+    const sortedGames = games.sort((a, b) => {
         if (sortByDownloads) {
             return (downloads[b.title] || 0) - (downloads[a.title] || 0);
         }
@@ -184,10 +204,10 @@ const ISOs = () => {
                 </Typography>
             )}
             <Grid container spacing={isMobile ? 2 : 10} style={{ padding: isMobile ? 10 : 50 }}>
-                {filteredGames.map((game, index) => (
+                {currentGames.map((game, index) => (
                     <Grid item key={index} xs={12} sm={6} md={4} lg={3}>
                         <Card
-                            className={`${classes.card} ${hovered === index ? classes.cardHovered : ''}`}
+                            className={`${classes.card} ${hovered === index ? classes.cardHovered : classes.cardNotHovered}`}
                             onMouseEnter={() => setHovered(index)}
                             onMouseLeave={() => setHovered(null)}
                             sx={{ borderRadius: 5 }}
