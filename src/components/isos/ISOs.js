@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
         height: 350,
         width: '100%',
         transition: 'transform 0.3s ease-in-out',
-        zIndex: 1,
+        zIndex: 0,
         marginTop: 2,
         position: 'relative',
     },
@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
         backgroundSize: 'contain',
     },
     cardContent: {
-        flexGrow: 1,
+        flexGrow: 0,
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
@@ -45,6 +45,7 @@ const useStyles = makeStyles((theme) => ({
         width: '100%',
         height: '100%',
         backgroundColor: 'rgba(0, 0, 139, 0.25)',
+        zIndex: 2,
     },
     button: {
         alignSelf: 'center',
