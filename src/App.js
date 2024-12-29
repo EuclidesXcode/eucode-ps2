@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import{ ISOs, Comunidade, Sobre, Donate, Header, Emulator } from './components';
+import{ ISOs, Community, Sobre, Donate, Header, Emulator } from './components';
 
 function App() {
   return (
@@ -12,7 +12,7 @@ function App() {
           <Route path="/" element={<ISOs />} />
           <Route path="/isos" element={<ISOs />} />
           <Route path="/emulator" element={<Emulator />} />
-          <Route path="/comunidade" element={<Comunidade />} />
+          <Route path="/community" element={<Community />} />
           <Route path="/sobre" element={<Sobre />} />
           <Route path="/donate" element={<Donate />} />
         </Routes>

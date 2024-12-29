@@ -8,7 +8,7 @@ import Cookies from 'js-cookie';
 import CryptoJS from 'crypto-js';
 import ReplyIcon from '@mui/icons-material/Reply';
 
-const Comunidade = () => {
+const Community = () => {
     const [name, setName] = useState('');
     const [comment, setComment] = useState('');
     const [comments, setComments] = useState([]);
@@ -285,4 +285,4 @@ const Comunidade = () => {
     );
 };
 
-export default Comunidade;
+export default Community;
