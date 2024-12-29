@@ -1,25 +1,28 @@
 import React, { useState, useEffect } from 'react';
-import { Grid, Card, CardMedia, CardContent, Typography, Button, TextField, IconButton } from '@mui/material';
+import { Grid, Card, CardMedia, CardContent, Typography, Button, TextField } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import { useMediaQuery } from 'react-responsive';
 import { database } from '../../firebase';
 import { ref, get, update, increment } from 'firebase/database';
-import SortIcon from '@mui/icons-material/Sort';
 
 const useStyles = makeStyles((theme) => ({
     card: {
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
-        height: 350,
+        height: 420,
         width: '100%',
         transition: 'transform 0.3s ease-in-out',
         zIndex: 1,
         marginTop: 2,
+        position: 'relative',
     },
     cardHovered: {
         transform: 'scale(1.05)',
-        zIndex: 2,
+        zIndex: 3, // Aumentar o zIndex para ficar acima do overlay
+    },
+    cardNotHovered: {
+        zIndex: 0, // Diminuir o zIndex para ficar abaixo do overlay
     },
     cardMedia: {
         height: 0,
@@ -38,8 +41,8 @@ const useStyles = makeStyles((theme) => ({
         left: 0,
         width: '100%',
         height: '100%',
-        backgroundColor: 'rgba(0, 0, 0, 0.5)',
-        zIndex: 1,
+        backgroundColor: 'rgba(177, 177, 243, 0.25)', // Azul marinho com 25% de opacidade
+        zIndex: 2,
     },
     button: {
         alignSelf: 'center',
@@ -118,13 +121,16 @@ const ISOs = () => {
 
     return (
         <div style={{ paddingTop: 20, paddingLeft: isMobile ? 20 : 200, paddingRight: isMobile ? 20 : 200 }}>
-            <h1>Baixe gratuitamente todas as {games.length} ISO`s da nossa comunidade!</h1>
+            {hovered !== null && <div className={classes.overlay} />}
+            <h1>Baixe gratuitamente todas as ISO`s da nossa comunidade!</h1>
             <h2>E o melhor de tudo, sem anúncios, sem enganação</h2>
             <p>Todas nossas ISOs estão no Google Drive, então você será redirecionado ao Google Drive quando clicar em download! Não se preocupe, todas nossas ISOs são testadas antes de vir pra cá!</p>
             <div className={classes.searchContainer}>
                 <TextField
                     label="Pesquisar ISOs"
                     variant="outlined"
+                    fullWidth
+                    className={classes.searchField}
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                 />
@@ -150,7 +156,6 @@ const ISOs = () => {
                     Listando por ordem alfabética
                 </Typography>
             )}
-            {hovered !== null && <div className={classes.overlay} />}
             <Grid container spacing={isMobile ? 2 : 10} style={{ padding: isMobile ? 10 : 50 }}>
                 {filteredGames.map((game, index) => (
                     <Grid item key={index} xs={12} sm={6} md={4} lg={3}>

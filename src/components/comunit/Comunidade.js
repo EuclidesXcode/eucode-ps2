@@ -5,6 +5,7 @@ import { ref, push, onValue, set, get } from 'firebase/database';
 import { useMediaQuery } from 'react-responsive';
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import CryptoJS from 'crypto-js';
 import ReplyIcon from '@mui/icons-material/Reply';
 
 const Comunidade = () => {
@@ -73,9 +74,10 @@ const Comunidade = () => {
     };
 
     const handlePasswordSubmit = async () => {
+        const hashedPassword = CryptoJS.SHA256(password).toString();
         if (isNewUser) {
             const usersRef = ref(database, `users/${name}`);
-            await set(usersRef, { password });
+            await set(usersRef, { password: hashedPassword });
             const commentsRef = ref(database, 'comments');
             push(commentsRef, { name, comment, replies: [], timestamp: Date.now() });
             setName(name);
@@ -85,7 +87,7 @@ const Comunidade = () => {
         } else {
             const usersRef = ref(database, `users/${name}`);
             const snapshot = await get(usersRef);
-            if (snapshot.exists() && snapshot.val().password === password) {
+            if (snapshot.exists() && snapshot.val().password === hashedPassword) {
                 const commentsRef = ref(database, 'comments');
                 push(commentsRef, { name, comment, replies: [], timestamp: Date.now() });
                 setName('');
