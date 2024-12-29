@@ -6,6 +6,7 @@ import { database } from '../../firebase';
 import { ref, get, update, increment } from 'firebase/database';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import gamesFromFile from './games';
 
 const useStyles = makeStyles((theme) => ({
     card: {
@@ -72,7 +73,7 @@ const ISOs = () => {
     const [hovered, setHovered] = useState(null);
     const [searchTerm, setSearchTerm] = useState('');
     const [downloads, setDownloads] = useState({});
-    const [games, setGames] = useState([]);
+    const [games, setGames] = useState(gamesFromFile);
     const [sortByDownloads, setSortByDownloads] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 12; // Número de itens por página
@@ -183,7 +184,7 @@ const ISOs = () => {
                 </Typography>
             )}
             <Grid container spacing={isMobile ? 2 : 10} style={{ padding: isMobile ? 10 : 50 }}>
-                {currentGames.map((game, index) => (
+                {filteredGames.map((game, index) => (
                     <Grid item key={index} xs={12} sm={6} md={4} lg={3}>
                         <Card
                             className={`${classes.card} ${hovered === index ? classes.cardHovered : ''}`}
