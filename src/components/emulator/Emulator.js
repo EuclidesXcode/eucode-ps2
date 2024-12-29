@@ -7,7 +7,7 @@ const Emulator = () => {
             <h1>Emulador</h1>
             <p>Ainda não tem o emulador do PS2?</p>
             <Typography variant="body1">
-                <h5>Windows -{'>'}<Link href="https://drive.google.com/file/d/1dFcvk5Fgjd9eZ8ARem-P81-ytsbmn8-J/view?usp=share_link" target="_blank" rel="noopener noreferrer">
+                <h5>Windows -{'>'} <Link href="https://drive.google.com/file/d/1dFcvk5Fgjd9eZ8ARem-P81-ytsbmn8-J/view?usp=share_link" target="_blank" rel="noopener noreferrer">
                     Baixe aqui de graça
                 </Link></h5>
                 
