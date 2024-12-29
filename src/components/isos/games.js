@@ -25,7 +25,7 @@ const games = [
     { id: 10, title: 'Black', image: black, link: 'https://drive.google.com/file/d/186h0zFWqDVJ3C_TG1rGugxrpR7AtoLkN/view?usp=sharing' },
     { id: 11, title: 'Call Of Duty 3', image: callOfDuty3, link: 'https://drive.google.com/file/d/1r4UkNoyAn3ImuQSdAuXYB2ZZFdqhm9ef/view?usp=sharing' },
     { id: 12, title: 'God of War', image: gow, link: 'https://drive.google.com/file/d/1PMPW4y5ugwGQDuvxKAiUb6hlJifQkUGt/view?usp=sharing' },
-    { id: 13, title: 'Grand Theft Auto San Andreas', image: gtaSA, link: 'https://drive.google.com/file/d/1LeRbnry6tN-kRqdeOMCl6QYOFEKwzjdU/view?usp=sharing' },
+    { id: 13, title: 'Grand Theft Auto San Andreas', image: gtaSA, link: 'https://drive.google.com/file/d/1nXU60GTWfEwGMM00rgy5n30ft0zo9vqB/view?usp=share_link' },
 ];
 
 export default games;
