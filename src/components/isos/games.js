@@ -10,6 +10,7 @@ import metalSlugAnthology from '../../assets/metal-slug-anthology.jpeg';
 import black from '../../assets/black.jpg';
 import callOfDuty3 from '../../assets/call-of-duty-3.jpeg';
 import gow from '../../assets/god-of-war.jpeg';
+import gtaSA from '../../assets/gta-sa.webp';
 
 const games = [
     { title: 'Need for Speed Underground 2', image: needForSpeed, link: 'https://drive.google.com/file/d/11mW64yMp8M8CjvXu6QMo1FLh6V4aL5P9/view?usp=share_link' },
@@ -24,6 +25,7 @@ const games = [
     { title: 'Black', image: black, link: 'https://drive.google.com/file/d/186h0zFWqDVJ3C_TG1rGugxrpR7AtoLkN/view?usp=sharing' },
     { title: 'Call Of Duty 3', image: callOfDuty3, link: 'https://drive.google.com/file/d/1r4UkNoyAn3ImuQSdAuXYB2ZZFdqhm9ef/view?usp=sharing' },
     { title: 'God of War', image: gow, link: 'https://drive.google.com/file/d/1LeRbnry6tN-kRqdeOMCl6QYOFEKwzjdU/view?usp=sharing' },
+    { title: 'Grand Theft Auto San Andreas', image: gtaSA, link: 'https://drive.google.com/file/d/1LeRbnry6tN-kRqdeOMCl6QYOFEKwzjdU/view?usp=sharing' },
 ];
 
 export default games;
