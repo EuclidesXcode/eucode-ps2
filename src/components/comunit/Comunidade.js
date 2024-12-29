@@ -78,7 +78,7 @@ const Comunidade = () => {
             await set(usersRef, { password });
             const commentsRef = ref(database, 'comments');
             push(commentsRef, { name, comment, replies: [], timestamp: Date.now() });
-            setName('');
+            setName(name);
             setComment('');
             // Salvar dados do usuário no cookie
             Cookies.set('loggedInUser', JSON.stringify({ name }), { expires: 7 });
