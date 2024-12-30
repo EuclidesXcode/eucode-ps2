@@ -141,7 +141,7 @@ const Header = () => {
                 )}
 
                 {!isMobile && (
-                    <Typography variant="body1" component="div" sx={{ flexGrow: 1 }}>
+                    <Typography variant="body1" component="div" sx={{ flexGrow: 1, marginLeft: 1 }}>
                         Visitantes: {visitors}
                     </Typography>)}
                 {(loggedInUser && !isMobile) && (
