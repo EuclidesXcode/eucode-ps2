@@ -117,6 +117,17 @@ const Header = () => {
                             onClose={toggleDrawer(false)}
                         >
                             {menuItems}
+
+                            <Typography variant="body1" component="div" sx={{ flexGrow: 1 }}>
+                                Visitantes: {visitors}
+                            </Typography>
+
+                            <div style={{ display: 'flex', alignItems: 'center' }}>
+                                <PersonIcon />
+                                <Typography variant="body1" component="div" sx={{ marginLeft: 1 }}>
+                                    {loggedInUser}
+                                </Typography>
+                            </div>
                         </Drawer>
                     </>
                 ) : (
@@ -130,9 +141,9 @@ const Header = () => {
                 )}
 
                 {!isMobile && (
-                <Typography variant="body1" component="div" sx={{ flexGrow: 1 }}>
-                    Visitantes: {visitors}
-                </Typography> )}
+                    <Typography variant="body1" component="div" sx={{ flexGrow: 1 }}>
+                        Visitantes: {visitors}
+                    </Typography>)}
                 {(loggedInUser && !isMobile) && (
                     <div style={{ display: 'flex', alignItems: 'center' }}>
                         <PersonIcon />
