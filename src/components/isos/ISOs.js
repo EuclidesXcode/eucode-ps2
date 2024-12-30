@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Grid, Card, CardMedia, CardContent, Typography, Button, TextField, IconButton } from '@mui/material';
-import { makeStyles, styled } from '@mui/styles';
+import { makeStyles } from '@mui/styles';
 import { useMediaQuery } from 'react-responsive';
 import { database } from '../../firebase';
 import { ref, get, update, set, increment } from 'firebase/database';
@@ -9,7 +9,6 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import gamesFromFile from './games'; 
 import GoogleDriveIcon from '../../assets/icons/google-drive-icon.svg';
 import UtorrentIcon from '../../assets/icons/utorrent-icon.svg';
-import { red } from '@mui/material/colors';
 
 const useStyles = makeStyles((theme) => ({
     card: {
@@ -40,6 +39,14 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
+    },
+    overlay: {
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: '100%',
+        zIndex: 2,
     },
     button: {
         alignSelf: 'center',
@@ -74,7 +81,7 @@ const ISOs = () => {
     const [sortByDownloads, setSortByDownloads] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 12;
-    const [overlayBrackground, setOverlayBackground] = useState('rgba(161, 161, 161, 0.25)');
+    const [overlayBackground, setOverlayBackground] = useState('rgba(161, 161, 161, 0.25)');
 
     useEffect(() => {
         const fetchGames = async () => {
@@ -155,39 +162,9 @@ const ISOs = () => {
         }
     };
 
-    const handleMouseEnter = (TYPE, index) => {
-        if(TYPE === 'CARD') {
-            setHovered(index);
-            setOverlayBackground('rgba(135, 50, 50, 0.25)');
-        } else if(TYPE === 'BUTTON_GD') {
-            setOverlayBackground('rgba(49, 218, 60, 0.25)');
-        } else if(TYPE === 'BUTTON_UT') {
-            setOverlayBackground('rgba(0, 0, 0, 0.25)');
-        }
-    }
-
-    const handleMouseLeave = (TYPE) => {
-        if(TYPE === 'CARD') {
-            setHovered(null);
-            setOverlayBackground('rgba(157, 48, 48, 0.25)');
-        } else if(TYPE === 'BUTTON_GD') {
-            setOverlayBackground('rgba(202, 28, 28, 0.25)');
-        } else if(TYPE === 'BUTTON_UT') {
-            setOverlayBackground('rgba(149, 11, 11, 0.25)');
-        }
-    }
-
     return (
         <div style={{ paddingTop: 20, paddingLeft: isMobile ? 20 : 200, paddingRight: isMobile ? 20 : 200 }}>
-            {hovered !== null && <div className={{
-                position: 'fixed',
-                top: 0,
-                left: 0,
-                width: '100%',
-                height: '100%',
-                zIndex: 2, 
-                backgroundColor: red,
-            }} />}
+            {hovered !== null && <div className={classes.overlay} style={{ backgroundColor: overlayBackground }} />}
             <h1>Baixe gratuitamente todas as {games.length} ISO`s da nossa comunidade!</h1>
             <h2>E o melhor de tudo, sem anúncios, sem enganação</h2>
             <p>Todas nossas ISOs estão no Google Drive, então você será redirecionado ao Google Drive quando clicar em download! Não se preocupe, todas nossas ISOs são testadas antes de vir pra cá!</p>
@@ -226,8 +203,8 @@ const ISOs = () => {
                     <Grid item key={index} xs={12} sm={6} md={6} lg={3}>
                         <Card
                             className={`${classes.card} ${hovered === index ? classes.cardHovered : classes.cardNotHovered}`}
-                            onMouseEnter={() => handleMouseEnter('CARD', index)}
-                            onMouseLeave={() => handleMouseLeave('CARD')}
+                            onMouseEnter={() => setHovered(index)}
+                            onMouseLeave={() => setHovered(null)}
                             sx={{ borderRadius: 5 }}
                         >
                             <CardMedia
@@ -254,8 +231,8 @@ const ISOs = () => {
                                         className={classes.button}
                                         onClick={() => handleDownload(game.title)}
                                         startIcon={<img  src={GoogleDriveIcon} width={16} height={16} style={{marginRight: '-10'}}/>} 
-                                        onMouseEnter={() => handleMouseEnter('BUTTON_GD')}
-                                        onMouseLeave={() => handleMouseLeave('BUTTON_GD')}
+                                        onMouseEnter={() => setOverlayBackground('rgba(35, 81, 230, 0.37)')} // Azul
+                                        onMouseLeave={() => setOverlayBackground('rgba(161, 161, 161, 0.25)')}
                                     >
                                         Download
                                     </Button>
@@ -268,8 +245,8 @@ const ISOs = () => {
                                             className={classes.torrentButton}
                                             onClick={() => handleDownload(game.title)}  
                                             startIcon={<img  src={UtorrentIcon} width={16} height={16} style={{marginRight: '-10'}}/>} 
-                                            onMouseEnter={() => handleMouseEnter('BUTTON_UT')}
-                                            onMouseLeave={() => handleMouseLeave('BUTTON_UT')}
+                                            onMouseEnter={() => setOverlayBackground('rgba(47, 151, 47, 0.41)')} // Verde
+                                            onMouseLeave={() => setOverlayBackground('rgba(161, 161, 161, 0.25)')}
                                         >
                                             Torrent
                                         </Button>
