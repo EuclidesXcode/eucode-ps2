@@ -7,28 +7,28 @@ const Emulator = () => {
             <h1>Emulador</h1>
             <p>Ainda não tem o emulador do PS2?</p>
             <Typography variant="body1">
-                <h5>Windows -{'>'}
+                <h5>Windows -{'> '}
                     <Link href="https://drive.google.com/file/d/1dFcvk5Fgjd9eZ8ARem-P81-ytsbmn8-J/view?usp=share_link" target="_blank" rel="noopener noreferrer">
                         Baixe aqui de graça
                     </Link>
                 </h5>
             </Typography>
             <Typography variant="body1">
-                <h5>Mac -{'>'}
+                <h5>Mac -{'> '}
                     <Link href="https://drive.google.com/file/d/1NB_ka_spyRtrNvRZyTA8ZCKNpzbgiGiz/view?usp=sharing" target="_blank" rel="noopener noreferrer">
                         Baixe aqui de graça
                     </Link>
                 </h5>
             </Typography>
             <Typography variant="body1">
-                <h5>Linux -{'>'}
+                <h5>Linux -{'> '}
                     <Link href="https://drive.google.com/file/d/1keDU0w68SfrhyE0gAkdAA9Qf-Rzzdrex/view?usp=sharing" target="_blank" rel="noopener noreferrer">
                         Baixe aqui de graça
                     </Link>
                 </h5>
             </Typography>
             <Typography variant="body1">
-                <h5>Android -{'>'}
+                <h5>Android -{'> '}
                     <Link href="https://drive.google.com/file/d/1xtwdCQLswSczLt6LHhwRNSjNdp9AEXQS/view?usp=sharing" target="_blank" rel="noopener noreferrer">
                         Baixe aqui de graça
                     </Link>
