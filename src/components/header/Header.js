@@ -147,7 +147,7 @@ const Header = () => {
                 {(loggedInUser && !isMobile) && (
                     <div style={{ display: 'flex', alignItems: 'center' }}>
                         <PersonIcon />
-                        <Typography variant="body1" component="div" sx={{ marginLeft: 1 }}>
+                        <Typography variant="body1" component="div" sx={{ marginLeft: 1, color: 'black' }}>
                             {loggedInUser}
                         </Typography>
                     </div>
