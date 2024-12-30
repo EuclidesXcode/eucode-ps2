@@ -128,10 +128,12 @@ const Header = () => {
                         <Button color="inherit" component={Link} to="/donate">Doação</Button>
                     </>
                 )}
+
+                {!isMobile && (
                 <Typography variant="body1" component="div" sx={{ flexGrow: 1 }}>
                     Visitantes: {visitors}
-                </Typography>
-                {loggedInUser && (
+                </Typography> )}
+                {(loggedInUser && !isMobile) && (
                     <div style={{ display: 'flex', alignItems: 'center' }}>
                         <PersonIcon />
                         <Typography variant="body1" component="div" sx={{ marginLeft: 1 }}>

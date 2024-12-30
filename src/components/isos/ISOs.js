@@ -6,7 +6,9 @@ import { database } from '../../firebase';
 import { ref, get, update, set, increment } from 'firebase/database';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import gamesFromFile from './games'; // Importar os jogos do arquivo
+import gamesFromFile from './games'; 
+import GoogleDriveIcon from '../../assets/icons/google-drive-icon.svg';
+import UtorrentIcon from '../../assets/icons/utorrent-icon.svg';
 
 const useStyles = makeStyles((theme) => ({
     card: {
@@ -29,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
     },
     cardMedia: {
         height: 0,
-        paddingTop: '56.25%', // 16:9
+        paddingTop: '56.25%',
         backgroundSize: 'contain',
     },
     cardContent: {
@@ -77,7 +79,6 @@ const ISOs = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [downloads, setDownloads] = useState({});
     const [games, setGames] = useState(gamesFromFile);
-    const [missingGames, setMissingGames] = useState([]);
     const [sortByDownloads, setSortByDownloads] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 12;
@@ -199,7 +200,7 @@ const ISOs = () => {
             )}
             <Grid container spacing={isMobile ? 2 : 10} style={{ padding: isMobile ? 10 : 50 }}>
                 {currentGames.map((game, index) => (
-                    <Grid item key={index} xs={12} sm={6} md={4} lg={3}>
+                    <Grid item key={index} xs={12} sm={6} md={6} lg={4}>
                         <Card
                             className={`${classes.card} ${hovered === index ? classes.cardHovered : classes.cardNotHovered}`}
                             onMouseEnter={() => setHovered(index)}
@@ -229,6 +230,7 @@ const ISOs = () => {
                                         rel="noopener noreferrer"
                                         className={classes.button}
                                         onClick={() => handleDownload(game.title)}
+                                        startIcon={<img  src={GoogleDriveIcon} width={16} height={16} style={{marginRight: '-10'}}/>} 
                                     >
                                         Download
                                     </Button>
@@ -240,6 +242,7 @@ const ISOs = () => {
                                             rel="noopener noreferrer"
                                             className={classes.torrentButton}
                                             onClick={() => handleDownload(game.title)}  
+                                            startIcon={<img  src={UtorrentIcon} width={16} height={16} style={{marginRight: '-10'}}/>} 
                                         >
                                             Torrent
                                         </Button>
