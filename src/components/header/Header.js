@@ -118,13 +118,13 @@ const Header = () => {
                         >
                             {menuItems}
 
-                            <Typography variant="body1" component="div" sx={{ flexGrow: 1 }}>
+                            <Typography variant="body1" component="div" sx={{ flexGrow: 2, marginLeft: 1 }}>
                                 Visitantes: {visitors}
                             </Typography>
 
                             <div style={{ display: 'flex', alignItems: 'center' }}>
                                 <PersonIcon />
-                                <Typography variant="body1" component="div" sx={{ marginLeft: 1 }}>
+                                <Typography variant="body1" component="div" sx={{  color: 'black' }}>
                                     {loggedInUser}
                                 </Typography>
                             </div>
@@ -147,7 +147,7 @@ const Header = () => {
                 {(loggedInUser && !isMobile) && (
                     <div style={{ display: 'flex', alignItems: 'center' }}>
                         <PersonIcon />
-                        <Typography variant="body1" component="div" sx={{ marginLeft: 1, color: 'black' }}>
+                        <Typography variant="body1" component="div" sx={{ marginLeft: 1 }}>
                             {loggedInUser}
                         </Typography>
                     </div>
