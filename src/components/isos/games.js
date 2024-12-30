@@ -12,6 +12,7 @@ import callOfDuty3 from '../../assets/call-of-duty-3.jpeg';
 import gow from '../../assets/god-of-war.jpeg';
 import gtaSA from '../../assets/gta-sa.webp';
 import godOfWar2 from '../../assets/god-of-war-2.jpeg';
+import totalOverdose from '../../assets/total-overdose.jpg';
 
 const games = [
     { id: 1, title: 'Need for Speed Underground 2', image: needForSpeed, link: 'https://drive.google.com/file/d/11mW64yMp8M8CjvXu6QMo1FLh6V4aL5P9/view?usp=share_link', linkTorrent: '' },
@@ -27,7 +28,8 @@ const games = [
     { id: 11, title: 'Call Of Duty 3', image: callOfDuty3, link: 'https://drive.google.com/file/d/1r4UkNoyAn3ImuQSdAuXYB2ZZFdqhm9ef/view?usp=sharing', linkTorrent: ''  },
     { id: 12, title: 'God of War', image: gow, link: 'https://drive.google.com/file/d/1PMPW4y5ugwGQDuvxKAiUb6hlJifQkUGt/view?usp=sharing', linkTorrent: 'https://utweb.rainberrytv.com/gui/share.html#link=magnet%3A%3Fxt%3Durn%3Abtih%3Ad992e3febca77d94ca248cb678e9c758be7de4d1%26dn%3DGod%2520of%2520War%2520(USA).iso.zip%26tr%3Dudp%253a%252f%252ftracker.openbittorrent.com%253a80%252fannounce%26tr%3Dudp%253a%252f%252ftracker.opentrackr.org%253a1337%252fannounce'  },
     { id: 13, title: 'Grand Theft Auto San Andreas', image: gtaSA, link: 'https://drive.google.com/file/d/1nXU60GTWfEwGMM00rgy5n30ft0zo9vqB/view?usp=share_link', linkTorrent: 'https://utweb.rainberrytv.com/gui/share.html#link=magnet%3A%3Fxt%3Durn%3Abtih%3A6d7f1e93212cda11f2ba5ab024f0af5074fba3cf%26dn%3DGrand%2520Theft%2520Auto%2520-%2520San%2520Andreas%2520(USA)%2520(v3.00).iso%26tr%3Dudp%253a%252f%252ftracker.openbittorrent.com%253a80%252fannounce%26tr%3Dudp%253a%252f%252ftracker.opentrackr.org%253a1337%252fannounce' },
-    { id: 11, title: 'God of War 2', image: godOfWar2, link: 'https://drive.google.com/file/d/1Hmzj2uIhkoLcJE5PA834Can88q3CiJkC/view?usp=sharing', linkTorrent: ''  },
+    { id: 14, title: 'God of War 2', image: godOfWar2, link: 'https://drive.google.com/file/d/1Hmzj2uIhkoLcJE5PA834Can88q3CiJkC/view?usp=sharing', linkTorrent: ''  },
+    { id: 15, title: 'Total Overdose', image: totalOverdose, link: 'https://drive.google.com/file/d/1zTbncbLjNeKGMmlOSMgu1H5EHKGKelTr/view?usp=sharing', linkTorrent: ''  },
 ];
 
 export default games;
