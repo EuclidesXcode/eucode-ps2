@@ -5,8 +5,8 @@ import QRcode from '../../assets/qr-code.jpeg';
 const Donate = () => {
     return (
         <div style={{ padding: '20px' }}>
-            <h1>Donate</h1>
-            <p>Ajude a manter o site com sua doação.</p>
+            <h1>Doação</h1>
+            <p>Ajude a manter a comunidade com sua doação.</p>
             <p>pode enviar na chave PIX: euclides.silva@accurate.com.br</p>
             <p>ou no QR Code abaixo:</p>
             <Card style={{ maxWidth: 345, margin: '20px auto' }}>
