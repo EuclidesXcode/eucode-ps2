@@ -13,6 +13,18 @@ import gow from '../../assets/god-of-war.jpeg';
 import gtaSA from '../../assets/gta-sa.webp';
 import godOfWar2 from '../../assets/god-of-war-2.jpeg';
 import totalOverdose from '../../assets/total-overdose.jpg';
+import metalGearSolid2 from '../../assets/metal-gear-solid-2.webp';
+import grandTheftAutoViceCity from '../../assets/gta-vc.webp';
+import residentEvil4 from '../../assets/resident-4.jpeg';
+import needForSpeedMostWanted from '../../assets/need-most-wanted.jpeg';
+import granTurismo4 from '../../assets/gran-turismo-4.webp';
+import driverParallelLines from '../../assets/driver.jpg';
+import pes2014 from '../../assets/pes-2014.jpg';
+import midnightClub3 from '../../assets/midnigth-club-3.jpeg';
+import pes2011 from '../../assets/pes-2011.jpg';
+import bully from '../../assets/bully.jpg';
+import guitarHeroIII from '../../assets/guitar-hero-3.jpg';
+import bombaPath2024 from '../../assets/bomba-path.png';
 
 const games = [
     { id: 1, title: 'Need for Speed Underground 2', image: needForSpeed, link: 'https://drive.google.com/file/d/11mW64yMp8M8CjvXu6QMo1FLh6V4aL5P9/view?usp=share_link', linkTorrent: '' },
@@ -30,6 +42,18 @@ const games = [
     { id: 13, title: 'Grand Theft Auto San Andreas', image: gtaSA, link: 'https://drive.google.com/file/d/1nXU60GTWfEwGMM00rgy5n30ft0zo9vqB/view?usp=share_link', linkTorrent: 'https://utweb.rainberrytv.com/gui/share.html#link=magnet%3A%3Fxt%3Durn%3Abtih%3A6d7f1e93212cda11f2ba5ab024f0af5074fba3cf%26dn%3DGrand%2520Theft%2520Auto%2520-%2520San%2520Andreas%2520(USA)%2520(v3.00).iso%26tr%3Dudp%253a%252f%252ftracker.openbittorrent.com%253a80%252fannounce%26tr%3Dudp%253a%252f%252ftracker.opentrackr.org%253a1337%252fannounce' },
     { id: 14, title: 'God of War 2', image: godOfWar2, link: 'https://drive.google.com/file/d/1Hmzj2uIhkoLcJE5PA834Can88q3CiJkC/view?usp=sharing', linkTorrent: ''  },
     { id: 15, title: 'Total Overdose', image: totalOverdose, link: 'https://drive.google.com/file/d/1zTbncbLjNeKGMmlOSMgu1H5EHKGKelTr/view?usp=sharing', linkTorrent: ''  },
+    { id: 25, title: 'Bully', image: bully, link: 'https://drive.google.com/file/d/1QAn5yIZTHJ6bY0XYBl0NSwHYURu8KKtl/view?usp=sharing', linkTorrent: ''  },
+    { id: 26, title: 'Guitar Hero III', image: guitarHeroIII, link: 'https://drive.google.com/file/d/1JHGLkOn5mHnQJ0e5eYL7gAyR1iW5bwx3/view?usp=share_link', linkTorrent: ''  },
+    { id: 23, title: 'Midnight Club 3', image: midnightClub3, link: 'https://drive.google.com/file/d/1WiFDze1gPZ65ja7QjBo3-XCE1bHUEWzA/view?usp=sharing', linkTorrent: ''  },
+    { id: 26, title: 'Bomba Path 2024', image: bombaPath2024, link: 'https://drive.google.com/file/d/1lFyqgE3b_1cnUnAbm7kXlWw7_LwNh2Us/view?usp=share_link', linkTorrent: ''  },
+    { id: 24, title: 'PES 2011', image: pes2011, link: 'https://drive.google.com/file/d/1CU4PodMSQ_X6p8pKDadBkdAIfCiNsOuI/view?usp=share_link', linkTorrent: ''  },
+    { id: 16, title: 'Metal Gear Solid 2', image: metalGearSolid2, link: 'https://drive.google.com/file/d/165BX5BqrKuVQK_crhR3lshUC45wgzZ3G/view?usp=sharing', linkTorrent: ''  },
+    { id: 17, title: 'Grand Theft Auto: Vice City', image: grandTheftAutoViceCity, link: 'https://drive.google.com/file/d/1IY1cwanUPJv2UaSJx6ecABP6yxDP1s49/view?usp=sharing', linkTorrent: ''  },
+    { id: 18, title: 'Resident Evil 4', image: residentEvil4, link: 'https://drive.google.com/file/d/1AE2numUgDROl6oxIY5u_1CIl25BXM3ZQ/view?usp=sharing', linkTorrent: ''  },
+    { id: 22, title: 'PES 2014', image: pes2014, link: 'https://drive.google.com/file/d/1qzdZcOtn0rNE99M-znBJyBxy4GxMOpBb/view?usp=sharing', linkTorrent: ''  },
+    { id: 20, title: 'Gran Turismo 4', image: granTurismo4, link: 'https://drive.google.com/file/d/1jGp61ScxVHz-rMfwOGYwtfX4kiso5dSH/view?usp=sharing', linkTorrent: ''  },
+    { id: 19, title: 'Need for Speed Most Wanted', image: needForSpeedMostWanted, link: 'https://drive.google.com/file/d/1vM0xTwr8a3GEZvof_LIxxYF4dC4FyoCt/view?usp=sharing', linkTorrent: ''  },
+    { id: 21, title: 'Driver - Parallel Lines', image: driverParallelLines, link: 'https://drive.google.com/file/d/1ih-lUk2qPbMC1w2OZSXmy8b2qGASRhRr/view?usp=sharing', linkTorrent: ''  },
 ];
 
 export default games;
