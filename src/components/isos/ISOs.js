@@ -51,6 +51,11 @@ const useStyles = makeStyles((theme) => ({
         alignSelf: 'center',
         marginTop: 'auto',
     },
+    torrentButton: {
+        backgroundColor: 'green',
+        color: 'white',
+        marginLeft: '10px',
+    },
     searchContainer: {
         display: 'flex',
         flexDirection: 'row',
@@ -183,7 +188,7 @@ const ISOs = () => {
                 <Typography variant="h6" component="div" style={{ marginBottom: '20px' }}>
                     Listando pelos mais Baixados
                 </Typography>
-            ): searchTerm ? (
+            ) : searchTerm ? (
                 <Typography variant="h6" component="div" style={{ marginBottom: '20px' }}>
                     Buscando...
                 </Typography>
@@ -215,17 +220,31 @@ const ISOs = () => {
                                         <strong>{game.title}</strong>
                                     </Typography>
                                 </div>
-                                <Button
-                                    variant="contained"
-                                    color="primary"
-                                    href={game.link}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className={classes.button}
-                                    onClick={() => handleDownload(game.title)}
-                                >
-                                    Download
-                                </Button>
+                                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 2 }}>
+                                    <Button
+                                        variant="contained"
+                                        color="primary"
+                                        href={game.link}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className={classes.button}
+                                        onClick={() => handleDownload(game.title)}
+                                    >
+                                        Download
+                                    </Button>
+                                    {game.linkTorrent && game.linkTorrent.length > 0 && (
+                                        <Button
+                                            variant="contained"
+                                            href={game.linkTorrent}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className={classes.torrentButton}
+                                            onClick={() => handleDownload(game.title)}  
+                                        >
+                                            Torrent
+                                        </Button>
+                                    )}
+                                </div>
                                 <Typography variant="body2" color="textSecondary" sx={{ marginTop: 1 }}>
                                     Downloads: {downloads[game.title] || 0}
                                 </Typography>
