@@ -200,7 +200,7 @@ const ISOs = () => {
             )}
             <Grid container spacing={isMobile ? 2 : 10} style={{ padding: isMobile ? 10 : 50 }}>
                 {currentGames.map((game, index) => (
-                    <Grid item key={index} xs={12} sm={6} md={6} lg={4}>
+                    <Grid item key={index} xs={12} sm={6} md={6} lg={3}>
                         <Card
                             className={`${classes.card} ${hovered === index ? classes.cardHovered : classes.cardNotHovered}`}
                             onMouseEnter={() => setHovered(index)}
