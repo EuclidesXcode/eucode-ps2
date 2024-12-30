@@ -118,7 +118,7 @@ const Header = () => {
                         >
                             {menuItems}
 
-                            <Typography variant="body1" component="div" sx={{ flexGrow: 2, marginLeft: 1 }}>
+                            <Typography variant="body1" component="div" sx={{ flexGrow: 2, marginLeft: 2 }}>
                                 Visitantes: {visitors}
                             </Typography>
 
